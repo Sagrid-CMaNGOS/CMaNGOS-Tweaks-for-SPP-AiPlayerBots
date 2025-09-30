@@ -207,21 +207,19 @@ private:
             break;
 
         case ITEM_CLASS_ARMOR:
-            if (proto->SubClass == ITEM_SUBCLASS_ARMOR_MISC) // rings, trinkets
+            // Special handling for rings and trinkets
+            if (proto->SubClass == ITEM_SUBCLASS_ARMOR_RING)
             {
-                if (proto->SubClass == ITEM_SUBCLASS_ARMOR_RING)
-                {
-                    slotsToCheck.push_back(INVENTORY_SLOT_FINGER1);
-                    slotsToCheck.push_back(INVENTORY_SLOT_FINGER2);
-                }
-                else if (proto->SubClass == ITEM_SUBCLASS_ARMOR_TRINKET)
-                {
-                    slotsToCheck.push_back(INVENTORY_SLOT_TRINKET1);
-                    slotsToCheck.push_back(INVENTORY_SLOT_TRINKET2);
-                }
+                slotsToCheck.push_back(INVENTORY_SLOT_FINGER1);
+                slotsToCheck.push_back(INVENTORY_SLOT_FINGER2);
+            }
+            else if (proto->SubClass == ITEM_SUBCLASS_ARMOR_TRINKET)
+            {
+                slotsToCheck.push_back(INVENTORY_SLOT_TRINKET1);
+                slotsToCheck.push_back(INVENTORY_SLOT_TRINKET2);
             }
             else
-                slotsToCheck.push_back(proto->InventoryType); // equip slot for other armors
+                slotsToCheck.push_back(proto->InventoryType); // standard armor slot
             break;
 
         default:
