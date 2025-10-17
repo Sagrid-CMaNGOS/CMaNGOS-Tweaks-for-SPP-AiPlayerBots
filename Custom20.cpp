@@ -83,7 +83,7 @@ if (bot->GetLevel() < 20)
 
 // Optional debug message
   
-  if (requester && ai->HasStrategy("debug mount", BotState::BOT_STATE_NON_COMBAT))
+if (requester && ai->HasStrategy("debug mount", BotState::BOT_STATE_NON_COMBAT))
       ai->TellPlayerNoFacing(requester, "Too low level to mount (requires level 20).");
 
     return false; // Prevent mount action
