@@ -7,7 +7,7 @@
 std::vector<uint32> custom20;
 switch (bot->getRace())
 {
-    case RACE_HUMAN:      custom20 = {50001, 50002}; break;
+    case RACE_HUMAN:      custom20 = {34000, 34001}; break; // Honor Steed, Harvest Steed
     case RACE_ORC:        custom20 = {50003, 50004}; break;
     case RACE_DWARF:      custom20 = {50005, 50006}; break;
     case RACE_NIGHTELF:   custom20 = {50007, 50008}; break;  
@@ -36,7 +36,7 @@ if (bot->GetLevel() >= 20 && bot->GetLevel() < 40 && !custom20.empty())
 std::vector<uint32> custom20;
 switch (bot->getRace())
 {
-    case RACE_HUMAN:      custom20 = {50001, 50002}; break;
+    case RACE_HUMAN:      custom20 = {34000, 34001}; break; // Honor Steed, Harvest Steed
     case RACE_ORC:        custom20 = {50003, 50004}; break;
     case RACE_DWARF:      custom20 = {50005, 50006}; break;
     case RACE_NIGHTELF:   custom20 = {50007, 50008}; break;
@@ -58,27 +58,21 @@ if (bot->GetLevel() >= 20 && bot->GetLevel() < firstmount && !custom20.empty())
 }
 #endif
 
- // =============================================
- // Add in MountValues.cpp - Whitelist Spells
- // =============================================
+ // =======================================================
+ // Add in CheckMountStateAction.cpp - Allow Early Mounting
+ // =======================================================
 
-bool MountValue::IsMountSpell(uint32 spellId)
+#ifdef MANGOSBOT_ZERO
+// Allow early mounting if bot has class/custom quest movement spells
+if (!firstmount)
 {
-    const SpellEntry* spellInfo = sSpellTemplate.LookupEntry<SpellEntry>(spellId);
-    if (!spellInfo)
-        return false;
-  
-    for (int i = 0; i < 3; ++i)
-        if (spellInfo->EffectApplyAuraName[i] == SPELL_AURA_MOUNTED)
-            return true;
-
-    static const std::set<uint32> customMounts = {
-        50001,50002,50003,50004,50005,50006,
-        50007,50008,50009,50010,50011,50012,
-        50013,50014,50015,50016
-    };
-    if (customMounts.find(spellId) != customMounts.end())
-        return true;
-
-    return false;
+    if (bot->HasSpell(34000) || // Honor Steed (human custom20_1)
+        bot->HasSpell(34001) || // Harvest Steed (human custom20_2)
+        bot->HasSpell(783) ||  // Travel Form (druid)
+        bot->HasSpell(2645))   // Ghost Wolf (shaman)
+    {
+        firstmount = true;
+        sLog.outDetail("Bot %d allowed early mount usage (custom20/travel/ghost form)", bot->GetGUIDLow());
+    }
 }
+#endif
