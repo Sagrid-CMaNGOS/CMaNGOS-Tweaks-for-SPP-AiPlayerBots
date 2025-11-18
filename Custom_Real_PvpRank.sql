@@ -24,7 +24,7 @@ INSERT INTO custom_real_pvprank VALUES
 (11, 45000, 53, 'Commander',          'Lieutenant General', 49999),
 (12, 50000, 55, 'Marshal',            'General',            54999),
 (13, 55000, 57, 'Field Marshal',      'Warlord',            59999),
-(14, 60000, 59, 'Grand Marshal',      'High Warlord',       75000);
+(14, 60000, 59, 'Grand Marshal',      'High Warlord',       65000);
 
 DROP TABLE IF EXISTS custom_pvp_cap_last_run;
 CREATE TABLE custom_pvp_cap_last_run (
